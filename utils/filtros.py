@@ -1,7 +1,9 @@
 def filtrar_emendas(df, 
                     uf, 
                     tipo, 
-                    nome_parlamentar):
+                    nome_parlamentar,
+                    dt_inicio,
+                    dt_fim):
     
     df_filtrado = df.copy()
     if uf != "Todos":
@@ -18,5 +20,11 @@ def filtrar_emendas(df,
             df_filtrado["nome_do_autor_da_emenda"]
             .str.lower()
             .str.contains(nome_parlamentar)
+        ]
+
+    if dt_inicio != " " and dt_fim != " ":
+        df_filtrado = df_filtrado[
+            (df_filtrado["ano_da_emenda"] >= dt_inicio) &
+            (df_filtrado["ano_da_emenda"] <= dt_fim)
         ]
     return df_filtrado
